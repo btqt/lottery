@@ -22,17 +22,35 @@ public class LocationPairExtractor {
     
     public List<LocationPair> getListLocationPair() {
         List<LocationPair> results = new ArrayList<LocationPair>();
+        List<String> tableCharacterList = new ArrayList<String>();
+        
         List<String> listGiai = table.getAllListGiai();
         
-//        List<char> 
         for(int i = 0; i < listGiai.size(); ++i) {
-            listGiai.get(i).toCharArray();
+            char[] giaiArr = listGiai.get(i).toCharArray();
+            for(int j = 0; j < giaiArr.length; ++j) 
+                tableCharacterList.add(Character.toString(giaiArr[j]));
         }
         
+        for(int i = 0; i < tableCharacterList.size(); ++i) 
+            for(int j = 0; j < tableCharacterList.size(); ++j) {
+                String first = tableCharacterList.get(i);
+                String second = tableCharacterList.get(j);
+                results.add( new LocationPair(i, j, first + second) );
+        }
+        
+        System.out.println(tableCharacterList.size());
         return results; 
    }
     
     public static void main(String[] args) {
+        DBConnector.getInstance().connectDB();
+        LotteryTable table = new TblSKQDAO().selectById(1);
         
+        List<LocationPair> l = new LocationPairExtractor(table).getListLocationPair();
+        
+        System.out.println("Count: " + l.size());
+        for(LocationPair p : l) 
+            System.out.println(p.getFirst() + " " + p.getSecond() + " " + p.getNumber());
     }
 }

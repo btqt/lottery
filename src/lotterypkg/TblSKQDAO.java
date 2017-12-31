@@ -162,6 +162,73 @@ public class TblSKQDAO extends TableDAO {
         return results;
     }
     
+    public LotteryTable selectById(int id) {
+        LotteryTable table = null;
+        Statement stmt = null;
+        try {
+            stmt = DBConnector.getInstance().getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + getTableName() + " WHERE id = " + id);
+            
+            while (rs.next()) {
+                table = new LotteryTable();
+                date = (Date) rs.getObject("date");
+                giaiDB = rs.getString("giai_db");
+                giaiNhat = rs.getString("giai_nhat");
+                giaiNhi = rs.getString("giai_nhi");
+                giaiBa = rs.getString("giai_ba");
+                giaiBon = rs.getString("giai_bon");
+                giaiNam = rs.getString("giai_nam");
+                giaiSau = rs.getString("giai_sau");
+                giaiBay = rs.getString("giai_bay");
+                
+                table.setDate(date);
+                table.themGiai(Giai.GIAI_DB, giaiDB);
+                table.themGiai(Giai.GIAI_NHAT, giaiNhat);
+                
+                String[] arrGiaiNhi = giaiNhi.split(";");
+                table.themGiai(Giai.GIAI_NHI, arrGiaiNhi[0]);
+                table.themGiai(Giai.GIAI_NHI, arrGiaiNhi[1]);
+                
+                String[] arrGiaiBa = giaiBa.split(";");
+                table.themGiai(Giai.GIAI_BA, arrGiaiBa[0]);
+                table.themGiai(Giai.GIAI_BA, arrGiaiBa[1]);
+                table.themGiai(Giai.GIAI_BA, arrGiaiBa[2]);
+                table.themGiai(Giai.GIAI_BA, arrGiaiBa[3]);
+                table.themGiai(Giai.GIAI_BA, arrGiaiBa[4]);
+                table.themGiai(Giai.GIAI_BA, arrGiaiBa[5]);
+                
+                String[] arrGiaiBon = giaiBon.split(";");
+                table.themGiai(Giai.GIAI_BON, arrGiaiBon[0]);
+                table.themGiai(Giai.GIAI_BON, arrGiaiBon[1]);
+                table.themGiai(Giai.GIAI_BON, arrGiaiBon[2]);
+                table.themGiai(Giai.GIAI_BON, arrGiaiBon[3]);
+                
+                String[] arrGiaiNam = giaiNam.split(";");
+                table.themGiai(Giai.GIAI_NAM, arrGiaiNam[0]);
+                table.themGiai(Giai.GIAI_NAM, arrGiaiNam[1]);
+                table.themGiai(Giai.GIAI_NAM, arrGiaiNam[2]);
+                table.themGiai(Giai.GIAI_NAM, arrGiaiNam[3]);
+                table.themGiai(Giai.GIAI_NAM, arrGiaiNam[4]);
+                table.themGiai(Giai.GIAI_NAM, arrGiaiNam[5]);
+                
+                String[] arrGiaiSau = giaiSau.split(";");
+                table.themGiai(Giai.GIAI_SAU, arrGiaiSau[0]);
+                table.themGiai(Giai.GIAI_SAU, arrGiaiSau[1]);
+                table.themGiai(Giai.GIAI_SAU, arrGiaiSau[2]);
+                
+                String[] arrGiaiBay = giaiBay.split(";");
+                table.themGiai(Giai.GIAI_BAY, arrGiaiBay[0]);
+                table.themGiai(Giai.GIAI_BAY, arrGiaiBay[1]);
+                table.themGiai(Giai.GIAI_BAY, arrGiaiBay[2]);
+                table.themGiai(Giai.GIAI_BAY, arrGiaiBay[3]);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return table;
+    }
+    
     public java.util.Date date;
     public String giaiDB;
     public String giaiNhat;

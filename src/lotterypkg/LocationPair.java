@@ -10,42 +10,61 @@ package lotterypkg;
  * @author PHIVH
  */
 public class LocationPair {
-    private String first;
-    private String second;
+    private int first;
+    private int second;
     private String number;
     
     public LocationPair() {
     }
 
-    public LocationPair(String first, String second, String number) {
+    public LocationPair(int first, int second, String number) {
         this.first = first;
         this.second = second;
         this.number = number;
     }
 
-    public String getFirst() {
+    /**
+     * @return the first
+     */
+    public int getFirst() {
         return first;
     }
 
-    public String getSecond() {
-        return second;
-    }
-
-    public void setFirst(String first) {
+    /**
+     * @param first the first to set
+     */
+    public void setFirst(int first) {
         this.first = first;
     }
 
-    public void setSecond(String second) {
+    /**
+     * @return the second
+     */
+    public int getSecond() {
+        return second;
+    }
+
+    /**
+     * @param second the second to set
+     */
+    public void setSecond(int second) {
         this.second = second;
     }
 
+    /**
+     * @return the number
+     */
     public String getNumber() {
         return number;
     }
 
+    /**
+     * @param number the number to set
+     */
     public void setNumber(String number) {
         this.number = number;
     }
+
     
     
 }
