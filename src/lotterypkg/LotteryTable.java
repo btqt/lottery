@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lottery;
+package lotterypkg;
 
 import java.util.Date;
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import lottery.DBConnector;
+import lotterypkg.DBConnector;
 
 /**
  *
@@ -99,9 +99,8 @@ public class LotteryTable {
     
     public void save() {
         try {
-            new LotteryTableDAO().insert(this);
+            new TblSKQDAO().insert(this);
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

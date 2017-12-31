@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lottery;
+package lotterypkg;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,15 @@ public class LocationPairExtractor {
         List<LocationPair> results = new ArrayList<LocationPair>();
         List<String> listGiai = table.getAllListGiai();
         
+//        List<char> 
+        for(int i = 0; i < listGiai.size(); ++i) {
+            listGiai.get(i).toCharArray();
+        }
         
         return results; 
    }
+    
+    public static void main(String[] args) {
+        
+    }
 }

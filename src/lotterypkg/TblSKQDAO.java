@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lottery;
+package lotterypkg;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,15 +11,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import lottery.LotteryTable.Giai;
+import lotterypkg.LotteryTable.Giai;
 
 /**
  *
  * @author PHIVH
  */
-public class LotteryTableDAO {
+public class TblSKQDAO extends TableDAO {
 
-    public LotteryTableDAO() {
+    public TblSKQDAO() {
+        setTableName("tbl_so_ket_qua");
+        
         date = new java.util.Date();
         giaiDB = "";
         giaiNhat = "";
@@ -31,10 +33,11 @@ public class LotteryTableDAO {
         giaiBay = "";
     }
     
+    @Override
     public void save() {        
         PreparedStatement stmt = null;
         try {
-            stmt = DBConnector.getInstance().getConnection().prepareStatement("INSERT INTO tbl_so_ket_qua(date,giai_db,giai_nhat,giai_nhi,giai_ba,giai_bon,giai_nam,giai_sau,giai_bay) "
+            stmt = DBConnector.getInstance().getConnection().prepareStatement("INSERT INTO " + getTableName() + " (date,giai_db,giai_nhat,giai_nhi,giai_ba,giai_bon,giai_nam,giai_sau,giai_bay) "
                                                                              + "VALUES(?,?,?,?,?,?,?,?,?)");
             stmt.setObject(1, date);
             stmt.setString(2, giaiDB);
@@ -89,12 +92,13 @@ public class LotteryTableDAO {
         }        
     }
     
+    @Override
     public List<LotteryTable> selectAll() {
         List<LotteryTable> results = new ArrayList<>();
         Statement stmt = null;
         try {
             stmt = DBConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM tbl_so_ket_qua ORDER BY date");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + getTableName() + " ORDER BY date");
             
             while (rs.next()) {
                 LotteryTable table = new LotteryTable();
@@ -166,20 +170,5 @@ public class LotteryTableDAO {
     public String giaiBon;
     public String giaiNam;
     public String giaiSau;
-    public String giaiBay;
-    
-    public static void main(String[] args) {
-        try {
-//            DBConnector.getInstance().connectDB();
-//        
-//            LotteryTableDAO tblDao = new LotteryTableDAO();
-//            List<LotteryTable> tables = tblDao.selectAll();
-//        
-//        
-//            DBConnector.getInstance().closeConnection();   
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    public String giaiBay;    
 }

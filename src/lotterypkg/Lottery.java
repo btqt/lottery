@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lottery;
+package lotterypkg;
 
 import java.util.List;
 
@@ -23,7 +23,8 @@ public class Lottery {
 
             MainGui mainGui = new MainGui();
             mainGui.setVisible(true);
-
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lottery;
+package lotterypkg;
 
 import java.io.File;
 import java.util.Calendar;
@@ -131,10 +131,12 @@ public class MainGui extends javax.swing.JFrame {
 
         try {
             listTable = new LotteryDataHTMLParser().parseData(txtFilePath.getText());
+            
+            // check whether each table existed in db or not by date
             for (LotteryTable table : listTable) {
-                List<LotteryTable> listTableInDB = new LotteryTableDAO().selectAll();
+                List<LotteryTable> listTableInDB = new TblSKQDAO().selectAll();
                 
-                int count = 0;
+                boolean tableExisted = false;
                 for(LotteryTable tableInDB : listTableInDB) {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(table.getDate());
@@ -146,11 +148,12 @@ public class MainGui extends javax.swing.JFrame {
                         && cal.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)
                         && cal.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)) {
                         
-                        count ++;
+                        tableExisted = true;
                     } else continue;
                 }
                 
-                if(count == 0)                
+                // in case table is NEW -> save to db
+                if(tableExisted == false)                
                     table.save();
             }
         } catch (Exception ex) {
@@ -161,7 +164,7 @@ public class MainGui extends javax.swing.JFrame {
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
         try {
-            listTable = new LotteryTableDAO().selectAll();
+            listTable = new TblSKQDAO().selectAll();
             new LotteryDataExcelExporter().export(listTable);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package lottery;
+package lotterypkg;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
