@@ -165,7 +165,7 @@ public class MainGui extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             listTable = new TblSKQDAO().selectAll();
-            new LotteryDataExcelExporter().export(listTable);
+            new LotteryDataExcelExporter().exportTables(listTable);
         } catch (Exception e) {
             e.printStackTrace();
         }

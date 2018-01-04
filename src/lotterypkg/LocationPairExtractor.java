@@ -5,6 +5,7 @@
  */
 package lotterypkg;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,22 @@ import java.util.List;
  */
 public class LocationPairExtractor {
 
-    LotteryTable table;
+    private LotteryTable table;
+
+    public LocationPairExtractor() {
+    }
 
     public LocationPairExtractor(LotteryTable table) {
         this.table = table;
     }
 
+    /**
+     * @param table the table to set
+     */
+    public void setTable(LotteryTable table) {
+        this.table = table;
+    }
+    
     public List<LocationPair> getListLocationPair() {
         List<LocationPair> results = new ArrayList<LocationPair>();
         List<String> tableCharacterList = new ArrayList<String>();
@@ -40,23 +51,48 @@ public class LocationPairExtractor {
                 results.add(new LocationPair(i, j, first + second));
             }
         }
-
-        System.out.println(tableCharacterList.size());
         return results;
     }
 
     public static void main(String[] args) {
-        DBConnector.getInstance().connectDB();
-        LotteryTable table = new TblSKQDAO().selectById(1);
+//        DBConnector.getInstance().connectDB();
+//
+//        List<LotteryTable> tables = new TblSKQDAO().selectAll();
+//
+//        LotteryTable table = new TblSKQDAO().selectById(1);
+//        
+//        List<LocationPair> locationPairs = new LocationPairExtractor(table).getListLocationPair();
+//        
+//        PreparedStatement stmt = null;
+//        try {
+//            for(int i = 0; i < locationPairs.size(); ++i) {
+//                LocationPair lp = locationPairs.get(i);
+//                stmt = DBConnector.getInstance().getConnection().prepareStatement("INSERT INTO tbl_location_pair_column (value) "
+//                                                                                 + "VALUES(?)");
+//                stmt.setObject(1, lp.getFirst() + "-" + lp.getSecond());
+//
+//                stmt.execute();
+//            }
+//            
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+        
+//        new LotteryDataExcelExporter().exportLocationPairs(tables);
 
-        List<LotteryTable> tables = new TblSKQDAO().selectAll();
-
-        for (LotteryTable t : tables) {
-            List<LocationPair> l = new LocationPairExtractor(t).getListLocationPair();
-            System.out.println("Count: " + l.size());
-            for (LocationPair p : l) {
-                System.out.println(p.getFirst() + " " + p.getSecond() + " " + p.getNumber());
-            }
-        }
+//        LocationPairExtractor lpe = new LocationPairExtractor();
+        
+//        boolean endLoop = false;
+        
+//        while(!endLoop) {
+//            List<String> listNumberWithSameLocationPair = new ArrayList<String>();
+//            int currentLocationPair = 0;
+//            for(int i = 0; i < tables.size(); ++i) {
+//                lpe.setTable(tables.get(i));
+//                String s = lpe.getListLocationPair().get(currentLocationPair).getNumber();
+//                listNumberWithSameLocationPair.add(s);
+//            }
+//        }        
     }
 }

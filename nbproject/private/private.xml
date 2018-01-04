@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/workspace/lottery/src/lotterypkg/TblSKQDAO.java</file>
-            <file>file:/E:/workspace/lottery/src/lotterypkg/DBConnector.java</file>
+            <file>file:/E:/workspace/lottery/src/lotterypkg/LocationPairExtractor.java</file>
+            <file>file:/E:/workspace/lottery/src/lotterypkg/Lottery.java</file>
+            <file>file:/E:/workspace/lottery/src/lotterypkg/TblTestDAO.java</file>
+            <file>file:/E:/workspace/lottery/src/lotterypkg/LotteryTable.java</file>
+            <file>file:/E:/workspace/lottery/src/lotterypkg/TableDAO.java</file>
+            <file>file:/E:/workspace/lottery/src/lotterypkg/LocationPair.java</file>
         </group>
     </open-files>
 </project-private>

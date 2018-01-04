@@ -28,13 +28,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author PHIVH
  */
 public class LotteryDataExcelExporter {
-        
-    public void export(List<LotteryTable> listTable) {
+
+    /**
+     * Export list table to excel file (.xlsx)
+     *
+     * @param listTable list of table to be exported
+     */
+    public void exportTables(List<LotteryTable> listTable) {
         try {
             Workbook wb;
             wb = new XSSFWorkbook();
 
-            
             String[] titles = new String[100];
             for (int i = 0; i < 100; ++i) {
                 if (i <= 9) {
@@ -43,7 +47,7 @@ public class LotteryDataExcelExporter {
                     titles[i] = "" + i;
                 }
             }
-            
+
             Map<String, CellStyle> styles = createStyles(wb);
             Sheet sheet = wb.createSheet("SoKetQua");
 
@@ -85,13 +89,16 @@ public class LotteryDataExcelExporter {
                             int count = 0;
                             for (int i = 0; i < listAllGiai.size(); ++i) {
                                 for (String string : listAllGiai) {
-                                    if (string.equalsIgnoreCase(headerRow.getCell(colNum).getStringCellValue()))
+                                    if (string.equalsIgnoreCase(headerRow.getCell(colNum).getStringCellValue())) {
                                         count++;
+                                    }
                                 }
-                                
-                                if(table.giaiDB().substring(table.giaiDB().length()-2).equalsIgnoreCase(headerRow.getCell(colNum).getStringCellValue()))
+
+                                if (table.giaiDB().substring(table.giaiDB().length() - 2).equalsIgnoreCase(headerRow.getCell(colNum).getStringCellValue())) {
                                     cell.setCellStyle(styles.get("cell_bg_green"));
-                                else cell.setCellStyle(styles.get("cell_bg_normal"));
+                                } else {
+                                    cell.setCellStyle(styles.get("cell_bg_normal"));
+                                }
                                 cell.setCellValue(count);
                                 count = 0;
                             }
@@ -115,7 +122,85 @@ public class LotteryDataExcelExporter {
         } catch (Exception e) {
         }
     }
-    
+
+    /**
+     *
+     * @param listLocationPair
+     */
+    public void exportLocationPairs(List<LotteryTable> listTables) {
+        try {
+            Workbook wb;
+            wb = new XSSFWorkbook();
+
+            String[] titles = new String[11449];
+            int k = 0;
+            for (int i = 0; i < 107; ++i) {
+                for (int j = 0; j < 107; ++j) {
+                    titles[k] = i + "-" + j;
+                    ++k;
+                }
+            }
+
+            Map<String, CellStyle> styles = createStyles(wb);
+            Sheet sheet = wb.createSheet("Cầu lô");
+
+            //the header row: centered text in 48pt font
+            Row headerRow = sheet.createRow(0);
+            headerRow.setHeightInPoints(12.75f);
+
+            for (int i = 0; i < titles.length; ++i) {
+                Cell cell = headerRow.createCell(i + 1);
+                cell.setCellValue(titles[i]);
+                cell.setCellStyle(styles.get("header"));
+            }
+
+            sheet.setColumnWidth(0, 12 * 256);
+            for (int i = 1; i <= titles.length; ++i) {
+                sheet.setColumnWidth(i, 7 * 256);
+            }
+
+            sheet.createFreezePane(1, 1);
+
+            Row row;
+            Cell cell;
+            int rowNum = 1;
+            int colNum = 0;
+            row = sheet.createRow(rowNum);
+
+            for (int i = 0; i < 100 /*listTables.size()*/; ++i) {
+                LotteryTable table = (LotteryTable) listTables.get(i);
+                row = sheet.createRow(rowNum);
+
+                for (colNum = 0; colNum <= 11449; ++colNum) {
+                    cell = row.createCell(colNum);
+
+                    if (colNum == 0) {
+                        cell.setCellValue(new SimpleDateFormat("dd-MM-yyyy").format(table.getDate()));
+                    } else {
+                        List<LocationPair> listLocationPairs = new LocationPairExtractor(table).getListLocationPair();
+                        cell = row.createCell(colNum);
+                        LocationPair l = listLocationPairs.get(colNum - 1);
+                        cell.setCellValue(l.getNumber());
+                    }
+                }
+
+                rowNum++;
+            }
+
+            // Write the output to a file
+            String file = "CauLo.xls";
+            if (wb instanceof XSSFWorkbook) {
+                file += "x";
+            }
+            FileOutputStream out = new FileOutputStream(file);
+            wb.write(out);
+            out.close();
+
+            wb.close();
+        } catch (Exception e) {
+        }
+    }
+
     /**
      * create a library of cell styles
      */
@@ -132,27 +217,26 @@ public class LotteryDataExcelExporter {
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style.setFont(headerFont);
         styles.put("header", style);
-        
+
         style = createBorderedStyle(wb);
         style.setAlignment(HorizontalAlignment.CENTER);
 //        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style.setFont(headerFont);
         styles.put("cell_bg_normal", style);
-        
+
         style = createBorderedStyle(wb);
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style.setFont(headerFont);
         styles.put("cell_bg_grey", style);
-        
+
         style = createBorderedStyle(wb);
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setFillForegroundColor(IndexedColors.GREEN.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style.setFont(headerFont);
         styles.put("cell_bg_green", style);
-        
 
         style = createBorderedStyle(wb);
         style.setAlignment(HorizontalAlignment.CENTER);
