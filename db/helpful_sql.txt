@@ -1,0 +1,14 @@
+
+SELECT * FROM tbl_so_ket_qua INTO OUTFILE 'C:/Users/PHIVH/Desktop/result.txt' FIELDs TERMINATED BY ',' LINES TERMINATED BY '\n'
+
+
+
+
+// chua test duoc lenh nay
+LOAD DATA INFILE 'C:/Users/PHIVH/Desktop/result.txt' INTO TABLE tbl_test FIELDS TERMINATED BY ',' LINES TERMINATED BY '\r\n' 
+
+
+
+
+
+

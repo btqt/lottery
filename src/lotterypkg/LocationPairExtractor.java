@@ -55,29 +55,29 @@ public class LocationPairExtractor {
     }
 
     public static void main(String[] args) {
-//        DBConnector.getInstance().connectDB();
-//
-//        List<LotteryTable> tables = new TblSKQDAO().selectAll();
-//
-//        LotteryTable table = new TblSKQDAO().selectById(1);
-//        
-//        List<LocationPair> locationPairs = new LocationPairExtractor(table).getListLocationPair();
-//        
-//        PreparedStatement stmt = null;
-//        try {
-//            for(int i = 0; i < locationPairs.size(); ++i) {
-//                LocationPair lp = locationPairs.get(i);
-//                stmt = DBConnector.getInstance().getConnection().prepareStatement("INSERT INTO tbl_location_pair_column (value) "
-//                                                                                 + "VALUES(?)");
-//                stmt.setObject(1, lp.getFirst() + "-" + lp.getSecond());
-//
-//                stmt.execute();
-//            }
-//            
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        
+        DBConnector.getInstance().connectDB();
+
+        List<LotteryTable> tables = new TblSKQDAO().selectAll();
+
+        LotteryTable table = new TblSKQDAO().selectById(1);
+        
+        List<LocationPair> locationPairs = new LocationPairExtractor(table).getListLocationPair();
+        
+        PreparedStatement stmt = null;
+        try {
+            for(int i = 0; i < locationPairs.size(); ++i) {
+                LocationPair lp = locationPairs.get(i);
+                stmt = DBConnector.getInstance().getConnection().prepareStatement("INSERT INTO tbl_location_pair_column (value) "
+                                                                                 + "VALUES(?)");
+                stmt.setObject(1, lp.getFirst() + "-" + lp.getSecond());
+
+                stmt.execute();
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         
 //        new LotteryDataExcelExporter().exportLocationPairs(tables);
 
