@@ -109,8 +109,8 @@ public class LotteryDataExcelExporter {
                 rowNum++;
             }
 
-            // Write the output to a file
-            String file = "SoKetQua.xls";
+            // Write the output to a file            
+            String file = listTable.size() > 1 ? "SoKetQua.xls" : "KetQua.xls";
             if (wb instanceof XSSFWorkbook) {
                 file += "x";
             }

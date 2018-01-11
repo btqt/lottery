@@ -98,7 +98,7 @@ public class TblSKQDAO extends TableDAO {
         Statement stmt = null;
         try {
             stmt = DBConnector.getInstance().getConnection().createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM " + getTableName() + " ORDER BY date");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + getTableName() + " ORDER BY date ASC");
             
             while (rs.next()) {
                 LotteryTable table = new LotteryTable();

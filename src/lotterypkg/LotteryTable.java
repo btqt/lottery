@@ -88,6 +88,27 @@ public class LotteryTable {
         return results;
     }
     
+    public boolean checkNumberIsExistInTable(String number) {
+        List<String> listGiai = getAllListGiaiNormalized();
+        for(String s : listGiai) {
+            if(s.compareTo(number) == 0)
+                return true;
+        }
+        
+        return false;
+    }
+    
+    public int countNumberExistInTable(String number)  {
+        int result = 0;
+        List<String> listGiai = getAllListGiaiNormalized();
+        for(String s : listGiai) {
+            if(s.compareTo(number) == 0)
+                result ++;
+        }
+        
+        return result;
+    }
+    
     List<String> getAllListGiaiNormalized() {
         List<String> results = getAllListGiai();
         for(int i = 0; i < results.size(); i ++) {
@@ -102,5 +123,9 @@ public class LotteryTable {
             new TblSKQDAO().insert(this);
         } catch (Exception e) {
         }
+    }
+    
+    public List<LocationPair> listLocationPairs() {
+        return new LocationPairExtractor(this).getListLocationPair();
     }
 }

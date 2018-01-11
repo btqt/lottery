@@ -12,6 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,7 +35,8 @@ public class LotteryDataHTMLParser {
         for (Element tableKQ : tableKQList) {
             LotteryTable table = new LotteryTable();
 
-            String date = tableKQ.select("thead > tr > td").first().text();
+            String date = tableKQ.select("thead > tr > td:eq(0)").first().text().split("8")[0] + 8;
+//            String date = tableKQ.select("thead > tr > td:eq(0)").first().text().split("KTTG")[0];
 
             String giaiDB = tableKQ.select("tbody > tr:eq(0) > td:eq(1)").text();
 
@@ -110,5 +113,15 @@ public class LotteryDataHTMLParser {
         }
 
         return listTable;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            new LotteryDataHTMLParser().parseData("test.html");
+        } catch (IOException ex) {
+            Logger.getLogger(LotteryDataHTMLParser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(LotteryDataHTMLParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
